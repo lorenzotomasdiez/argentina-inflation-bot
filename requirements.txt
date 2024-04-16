@@ -1,0 +1,7 @@
+psycopg2
+re
+bs4
+selenium
+datetime
+openpyxl
+requests

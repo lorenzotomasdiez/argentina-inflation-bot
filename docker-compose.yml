@@ -1,0 +1,26 @@
+version: '3'
+
+services: 
+  selenium:
+    container_name: remote_chromedriver
+    image: seleniarm/standalone-chromium:latest
+    shm_size: 2gb
+    ports:
+      - 4444:4444
+    restart: always
+  
+  db:
+    image: postgres
+    container_name: basic_basket_variation
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: variation
+    
+volumes:
+  postgres-db-volume:

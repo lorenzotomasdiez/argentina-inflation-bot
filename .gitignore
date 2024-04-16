@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+
+
+# Environments
+credentials.py
+.venv
+.env
+venv/
+env/
+
+# Database
+pgdata/
+
+# Local Backup
+base/backup/
