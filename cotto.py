@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait # type: ignore
 from selenium.webdriver.support import expected_conditions as EC # type: ignore
 from selenium.common.exceptions import TimeoutException # type: ignore
-from config import remote_chromedriver, tabla
+from config import SELENIUM_HOST, tabla
 
 import datetime as dt
 
@@ -123,7 +123,7 @@ def scrap_cotto(canasta):
     :param canasta: un marco de datos con los productos a raspar
     """
     # chromedriver path
-    remote_webdriver = remote_chromedriver
+    remote_webdriver = SELENIUM_HOST
 
     # Instantiate ChromeOptions
     chrome_options = webdriver.ChromeOptions()

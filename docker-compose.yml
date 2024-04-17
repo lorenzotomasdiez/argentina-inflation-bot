@@ -1,26 +1,35 @@
-version: '3'
+version: "3"
 
-services: 
+services:
+  python:
+    build:
+      context: ./
+      dockerfile: ./docker/python/Dockerfile
+    networks:
+      - argentina-inflation-network
+    volumes:
+      - ./:/app
+      - ./.env:/app/.env
+
   selenium:
-    container_name: remote_chromedriver
     image: seleniarm/standalone-chromium:latest
     shm_size: 2gb
-    ports:
-      - 4444:4444
     restart: always
-  
-  db:
+    networks:
+      - argentina-inflation-network
+
+  psql:
     image: postgres
-    container_name: basic_basket_variation
-    ports:
-      - "5432:5432"
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: variation
-    
-volumes:
-  postgres-db-volume:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - argentina-inflation-network
+
+networks:
+  argentina-inflation-network:
+    driver: bridge

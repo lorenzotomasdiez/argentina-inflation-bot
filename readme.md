@@ -6,37 +6,23 @@ The Argentina Inflation Bot aims to determine and forecast the monthly inflation
 
 ## Requirements
 
-- Python 3.8 or higher
+- docker v25.0.2 or higher
+- docker-compose v2.24.3 or higher
 
 ## Environment Setup
 
-1. **Create a virtual environment:** To create a virtual environment with Python 3.8, run the following command in your terminal:
+1. **Create your env variables:** To run the bot you need to create first use your own env variables. Copy the .env.example and create your .env running the following command in your terminal:
 
-    ```bash
-    python3.8 -m venv venv
-    ```
+   ```bash
+   cp .env.example .env
+   ```
 
-2. **Activate the virtual environment:** After creating the virtual environment, activate it by running the following command:
+## Usage
 
-    ```bash
-    source venv/bin/activate
-    ```
-
-    If you are on Windows, the command to activate the virtual environment may be different. Refer to the Python documentation for more information.
-
-## Installing Dependencies
-
-Install all necessary dependencies specified in the requirements.txt file using pip:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## Usage 
-Once you have set up the environment and installed the dependencies, you can run the main script of the project:
-    ```bash
-    python main.py
-    ```
+Once you have set up the environment, you can run the main script of the project:
+`bash
+    docker-compose up -d
+    `
 
 ## Contributions and Acknowledgements
 

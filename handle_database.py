@@ -1,7 +1,7 @@
 import psycopg2 # type: ignore
 import pandas as pd
 import os
-from config import psql_host, psql_port, script_dir, tabla
+from config import POSTGRES_HOST, POSTGRES_PORT, script_dir, tabla
 
 global lista_larga
 
@@ -17,8 +17,8 @@ def cargar_ddbb_local(listado_productos):
         print("hay un Nan en el diccionario")
         return
     conn = psycopg2.connect(
-        host=psql_host,
-        port=psql_port,
+        host=POSTGRES_HOST,
+        port=POSTGRES_PORT,
         database="variation",
         user="postgres",
         password="postgres",
@@ -63,8 +63,8 @@ def guardar_csv_excel():
     datos en formato largo.
     """
     conn = psycopg2.connect(
-        host=psql_host,
-        port=psql_port,
+        host=POSTGRES_HOST,
+        port=POSTGRES_PORT,
         database="variation",
         user="postgres",
         password="postgres",

@@ -3,7 +3,6 @@ __pycache__/
 
 
 # Environments
-credentials.py
 .venv
 .env
 venv/
