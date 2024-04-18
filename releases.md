@@ -9,6 +9,12 @@
 - Added a Flask server to the project to serve the model and the API.
 - Created basic routes to interact with the model.
 
+### IMPLEMENTS BACKUP SERVICE
+
+- Backup csv-xlsx: Implemented a backup service to store data locally by creating a new date copy of prices.csv, prices_long_list.csv, prices.xlsx
+
+- Implemented test cases for the backup csv-xlsx service. (IN PROGRESS)
+
 ## Changes and Improvements
 
 ### Dockerized the project
