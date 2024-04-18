@@ -1,4 +1,4 @@
-# Argentina Inflation Bot
+# Argentina Inflation Bot v0.1.0
 
 ## Description
 
@@ -18,10 +18,12 @@ The Argentina Inflation Bot aims to determine and forecast the monthly inflation
    ```
 
 ## Usage
+
 Once you have set up the environment, you can run the main script of the project:
-  ```bash
-  docker-compose up -d
-  ```
+
+```bash
+docker-compose up -d
+```
 
 ## Contributions and Acknowledgements
 

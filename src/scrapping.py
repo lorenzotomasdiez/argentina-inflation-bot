@@ -13,7 +13,7 @@ def scrapping():
 
   # Guardar datos en csv y excel
 
-  guardar_csv_excel()
+  #guardar_csv_excel()
 
   # Cargar datos en la base de datos cloud
   #cargar_dddb_cloud(lista_larga)

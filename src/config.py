@@ -4,8 +4,8 @@ import os
 
 load_dotenv()
 
-script_dir = os.path.dirname(os.path.realpath(__file__))
-basic_basket_list_dir = os.path.join(script_dir, "base", "basic_basket_list.csv")
+root_dir = os.path.dirname(os.path.realpath(__file__))
+basic_basket_list_dir = os.path.join(root_dir, "base", "basic_basket_list.csv")
 
 canasta = pd.read_csv(
   basic_basket_list_dir,
@@ -14,6 +14,7 @@ canasta = pd.read_csv(
   usecols=["producto", "cantidad_g_ml", "url_coto", "tipo_producto", "porcion"],
 )
 
+API_PORT = os.getenv("API_PORT")
 TELEGRAM_API = os.getenv("TELEGRAM_API")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
@@ -29,13 +30,16 @@ tabla = {
   "fecha": "DATE",
 }
 
-def test_config():
-    print("TELEGRAM_API", TELEGRAM_API)
-    print("TELEGRAM_CHAT_ID", TELEGRAM_CHAT_ID)
-    print("POSTGRES_HOST", POSTGRES_HOST)
-    print("POSTGRES_PORT", POSTGRES_PORT)
-    print("POSTGRES_USER", POSTGRES_USER)
-    print("POSTGRES_PASSWORD", POSTGRES_PASSWORD)
-    print("POSTGRES_DB", POSTGRES_DB)
-    print("SELENIUM_HOST", SELENIUM_HOST)
-    print("SELENIUM_PORT", SELENIUM_PORT)
+def get_config():
+    return {
+        "API_PORT": API_PORT,
+        "TELEGRAM_API": TELEGRAM_API,
+        "TELEGRAM_CHAT_ID": TELEGRAM_CHAT_ID,
+        "POSTGRES_HOST": POSTGRES_HOST,
+        "POSTGRES_PORT": POSTGRES_PORT,
+        "POSTGRES_USER": POSTGRES_USER,
+        "POSTGRES_PASSWORD": POSTGRES_PASSWORD,
+        "POSTGRES_DB": POSTGRES_DB,
+        "SELENIUM_HOST": SELENIUM_HOST,
+        "SELENIUM_PORT": SELENIUM_PORT,
+    }

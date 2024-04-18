@@ -1,15 +1,17 @@
 version: "3"
 
 services:
-  python:
+  app:
     build:
       context: ./
       dockerfile: ./docker/python/Dockerfile
     networks:
       - argentina-inflation-network
     volumes:
-      - ./:/app
+      - ./src:/app
       - ./.env:/app/.env
+    ports:
+      - "${API_PORT}:${API_PORT}"
 
   selenium:
     image: seleniarm/standalone-chromium:latest
