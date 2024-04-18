@@ -1,6 +1,6 @@
-# Current version: 0.1.0
+# Current v0.1.0
 
-# Release Notes - Version 0.1.0
+# Release Notes - v0.1.0
 
 ## New Features
 
