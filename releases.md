@@ -1,6 +1,6 @@
-# Current version: 0.1.0
+# Current v0.1.0
 
-# Release Notes - Version 0.1.0
+# Release Notes - v0.1.0
 
 ## New Features
 
@@ -8,6 +8,18 @@
 
 - Added a Flask server to the project to serve the model and the API.
 - Created basic routes to interact with the model.
+
+### IMPLEMENTS ALL SERVICES
+
+- Backup csv-xlsx: Implemented a backup service to store data locally by creating a new date copy of prices.csv, prices_long_list.csv, prices.xlsx
+
+- Telegram service: Implemented a Telegram service to send messages to a specific chat_id.
+
+- Variation calculation service: Implemented a service to calculate the variation between the last two prices of a specific product.
+
+- Scrap service: Implemented a service to scrape the prices of a specific product from a specific website.
+
+- DB Service: Implemented a service to store the scraped data in a database.
 
 ## Changes and Improvements
 

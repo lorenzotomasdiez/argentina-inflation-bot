@@ -12,4 +12,4 @@ env/
 pgdata/
 
 # Local Backup
-base/backup/
+app/base/backup/
