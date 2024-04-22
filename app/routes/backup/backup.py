@@ -10,7 +10,3 @@ def test():
 @backup_bp.route('/local-csv', methods = ['POST'])
 def local():
     return backup_local_csv()
-
-@backup_bp.route('/restore')
-def restore_backup():
-    return "This is the restore backup route."

@@ -13,7 +13,7 @@ app-log:
 	@echo "Showing the logs..."
 	docker-compose logs -f app
 
-.PHONY: resetss
-resetss:
-	@echo "Resetting the server..."
+.PHONY: reset
+reset:
+	@echo "Reseting server"
 	docker-compose restart app

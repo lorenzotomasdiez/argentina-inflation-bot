@@ -9,11 +9,17 @@
 - Added a Flask server to the project to serve the model and the API.
 - Created basic routes to interact with the model.
 
-### IMPLEMENTS BACKUP SERVICE
+### IMPLEMENTS ALL SERVICES
 
 - Backup csv-xlsx: Implemented a backup service to store data locally by creating a new date copy of prices.csv, prices_long_list.csv, prices.xlsx
 
-- Implemented test cases for the backup csv-xlsx service. (IN PROGRESS)
+- Telegram service: Implemented a Telegram service to send messages to a specific chat_id.
+
+- Variation calculation service: Implemented a service to calculate the variation between the last two prices of a specific product.
+
+- Scrap service: Implemented a service to scrape the prices of a specific product from a specific website.
+
+- DB Service: Implemented a service to store the scraped data in a database.
 
 ## Changes and Improvements
 
