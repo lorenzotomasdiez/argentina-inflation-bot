@@ -1,3 +1,4 @@
+import psycopg2
 import pandas as pd
 from dotenv import load_dotenv
 import os
@@ -6,8 +7,10 @@ load_dotenv()
 
 root_dir = os.path.dirname(os.path.realpath(__file__))
 basic_basket_list_dir = os.path.join(root_dir, "base", "basic_basket_list.csv")
+prices_dir = os.path.join(root_dir, "base", "prices.csv")
+prices_long_list_dir = os.path.join(root_dir, "base", "prices_long_list.csv")
 
-canasta = pd.read_csv(
+basket_csv = pd.read_csv(
   basic_basket_list_dir,
   sep=";",
   encoding="utf-8",
@@ -25,9 +28,9 @@ POSTGRES_DB = os.getenv("POSTGRES_DB")
 SELENIUM_HOST = os.getenv("SELENIUM_HOST")
 SELENIUM_PORT = os.getenv("SELENIUM_PORT")
 
-tabla = {
+table = {
   "id": "SERIAL PRIMARY KEY",
-  "fecha": "DATE",
+  "date": "DATE",
 }
 
 def get_config():
@@ -43,3 +46,13 @@ def get_config():
         "SELENIUM_HOST": SELENIUM_HOST,
         "SELENIUM_PORT": SELENIUM_PORT,
     }
+
+
+def get_db_connection():
+    return psycopg2.connect(
+        host=POSTGRES_HOST,
+        port=POSTGRES_PORT,
+        database=POSTGRES_DB,
+        user=POSTGRES_USER,
+        password=POSTGRES_PASSWORD
+    )
