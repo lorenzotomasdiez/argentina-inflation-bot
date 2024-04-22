@@ -56,3 +56,21 @@ def get_db_connection():
         user=POSTGRES_USER,
         password=POSTGRES_PASSWORD
     )
+
+def get_month_from_date(date):
+    months = {
+        "01": "Enero",
+        "02": "Febrero",
+        "03": "Marzo",
+        "04": "Abril",
+        "05": "Mayo",
+        "06": "Junio",
+        "07": "Julio",
+        "08": "Agosto",
+        "09": "Septiembre",
+        "10": "Octubre",
+        "11": "Noviembre",
+        "12": "Diciembre",
+    }
+    month = date.split("-")[1]
+    return months.get(month)
