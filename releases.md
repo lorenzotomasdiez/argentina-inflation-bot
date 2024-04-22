@@ -15,6 +15,8 @@
 
 - Telegram service: Implemented a Telegram service to send messages to a specific chat_id.
 
+  - Implemented general messages of the calculated variation. General variation, products with more variation and products with more reduction.
+
 - Variation calculation service: Implemented a service to calculate the variation between the last two prices of a specific product.
 
 - Scrap service: Implemented a service to scrape the prices of a specific product from a specific website.
