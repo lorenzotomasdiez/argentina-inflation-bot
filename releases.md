@@ -1,4 +1,15 @@
-# Current v0.1.0
+# Current v0.2.0
+
+# Release Notes - v0.2.0
+
+## New Features
+
+### ADD CARREFOUR LIST
+
+- Added list of products from Carrefour to the project in csv format
+- Create seeder of products_markets for the Carrefour list
+
+### ADD CARREFOUR SCRAP SERVICE
 
 # Release Notes - v0.1.0
 

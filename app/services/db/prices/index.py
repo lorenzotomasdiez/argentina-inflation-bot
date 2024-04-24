@@ -9,7 +9,7 @@ def add_prices(prices, market_id):
     if not date:
         return {"error": "Missing date in prices data"}, 400
 
-    already_exists = get_prices(date)
+    already_exists = get_prices(date, market_id)
     if already_exists:
         return {"error": f"Prices for date {date} already exist in the database"}, 409
 
@@ -28,7 +28,7 @@ def add_prices(prices, market_id):
 
         connection.commit()
 
-        results = get_prices(date)
+        results = get_prices(date, market_id)
         return results
 
     except Exception as e:
@@ -41,15 +41,15 @@ def add_prices(prices, market_id):
         connection.close()
 
 
-def get_prices(date):
+def get_prices(date, market_id):
     connection = get_db_connection()
     cursor = connection.cursor()
     try:
         cursor.execute(
             """
-            SELECT * FROM prices WHERE date = %s
+            SELECT * FROM prices WHERE date = %s AND market_id = %s
             """,
-            (date,)
+            (date, market_id),
         )
 
         results = cursor.fetchall()

@@ -4,7 +4,7 @@ import json
 import pandas as pd
 from config import POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER, basic_basket_list_dir
 
-def seed_products_markets(products_seeded, markets_seeded):
+def seed_products_markets_cotto(products_seeded, markets_seeded):
     connection = psycopg2.connect(
         host=POSTGRES_HOST,
         port=POSTGRES_PORT,

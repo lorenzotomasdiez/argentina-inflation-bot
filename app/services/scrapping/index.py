@@ -1,4 +1,5 @@
 from .cotto import scrap_cotto
+from .carrefour import scrap_carrefour
 from config import basket_csv
 from services.db.prices.index import add_prices
 
@@ -11,4 +12,11 @@ def scrap():
         return coto_results
     else:
         prices_results = add_prices(prices = coto_results, market_id = 1)
-        return prices_results
+
+    return {
+        "sucess": True,
+        "message": "Scrap succefully done"
+    }
+
+def single_scrap_carrefour():
+    return scrap_carrefour()

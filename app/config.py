@@ -7,6 +7,7 @@ load_dotenv()
 
 root_dir = os.path.dirname(os.path.realpath(__file__))
 basic_basket_list_dir = os.path.join(root_dir, "base", "basic_basket_list.csv")
+basic_basket_list_carrefour_dir = os.path.join(root_dir, "base", "basic_basket_list_carrefour.csv")
 prices_dir = os.path.join(root_dir, "base", "prices.csv")
 prices_long_list_dir = os.path.join(root_dir, "base", "prices_long_list.csv")
 

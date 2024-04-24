@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait # type: ignore
 from selenium.webdriver.support import expected_conditions as EC # type: ignore
 from selenium.common.exceptions import TimeoutException # type: ignore
-from config import SELENIUM_HOST, SELENIUM_PORT, table
+from config import SELENIUM_HOST, SELENIUM_PORT
 
 
 index_error = []
@@ -93,9 +93,10 @@ def scrap_cotto():
         "date": dt.datetime.now().strftime("%Y-%m-%d")
     }
     date = result["date"]
-    already_exists = get_prices(date)
-    if already_exists:
-        return {"error": "data already exists for this date"}
+
+    already_exists = get_prices(date, market_id=1)
+    if len(already_exists) > 0:
+        return {"error": f"Prices for date {date} already exist in the database"}
 
     # should fetch coto id from db
     products = get_all_products_markets(1)

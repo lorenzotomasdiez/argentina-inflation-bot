@@ -1,7 +1,3 @@
-#from src.backup import backup_prices
-#from scrapping import scrapping
-#from telegram import send_task_finished
-#from src.scrapping import scrapping
 import time
 from flask import Flask
 from config import get_config, root_dir
@@ -26,8 +22,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=api_port,  debug=True)
-
-#backup_prices() => service done
-#scrapping() => service done
-#send_task_finished()
-#twittear
