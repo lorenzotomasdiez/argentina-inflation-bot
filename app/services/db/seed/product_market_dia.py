@@ -5,7 +5,7 @@ import pandas as pd
 import os
 from config import POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER, base_dir
 
-def seed_products_markets_cotto(products_seeded):
+def seed_products_markets_dia(products_seeded):
     try:
         connection = psycopg2.connect(
             host=POSTGRES_HOST,
@@ -37,10 +37,10 @@ def seed_products_markets_cotto(products_seeded):
             """
         )
 
-        coto_dir =  os.path.join(base_dir, "01-list.csv")
-        coto_df = pd.read_csv(coto_dir, sep=";", encoding="utf-8")
+        dia_dir =  os.path.join(base_dir, "04-list.csv")
+        dia_df = pd.read_csv(dia_dir, sep=";", encoding="utf-8")
 
-        for row in coto_df.itertuples():
+        for row in dia_df.itertuples():
             # find in products_seeded object the one with the name equal to df.producto
             product = next((product for product in products_seeded if product["format_name"] == row.product), None)
             if product is None:
@@ -50,7 +50,7 @@ def seed_products_markets_cotto(products_seeded):
                 INSERT INTO products_markets (product_id, market_id, url, measurement, quantity)
                 VALUES (%s, %s, %s, %s, %s)
                 """,
-                (product["id"], 1, row.url, row.measurement, row.quantity)
+                (product["id"], 4, row.url, row.measurement, row.quantity)
             )
 
         connection.commit()

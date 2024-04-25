@@ -19,37 +19,35 @@ index_error = []
 :param portion: the amount of the product you want to buy, defaults to 1 (optional)
 :return: the value of the variable "list"
 """
-def kg(product, page, result):
-    id = str(product["product_id"])
-    quantity = product["quantity"]
+def kilo(id, page, list, portion=1):
     product_info_container = page.find_all("div", id="productInfoContainer")
     disponibility = product_info_container[0].find_all(
         "div", class_="product_not_available"
     )
 
     if disponibility:
-        result.update({id: 0})
+        list.update({id: 0})
         #SHOULD SAVE ERROR ON DB
-        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} not available, {result[id]}")
+        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} not available, {list[id]}")
         return None
 
     try:
         # search inside product_info_container the span with the class unit
         value = product_info_container[0].find_all("span", class_="unit")[0].get_text()
     except IndexError:
-        result.update({id: 0})
+        list.update({id: 0})
         index_error.append(id)
-        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} IndexError, {result[id]}")
+        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} IndexError, {list[id]}")
         return None
 
     match = re.search(r"\$([\d,.]+)", value)
 
     if match:
         number = float(match.group(1).replace(".", "").replace(",", "."))
-        result.update({id: number * quantity})
+        list.update({id: number * portion})
     else:
-        result.update({id: 0})
-        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} not found, {result[id]}")
+        list.update({id: 0})
+        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} not found, {list[id]}")
 
 """
 - Take a product name and a URL, and return the price of the product.
@@ -57,17 +55,15 @@ def kg(product, page, result):
 :param product_url: The URL of the product
 :return: the value of the variable "list"
 """
-def unit(product, page, result):
-    id = str(product["product_id"])
-    quantity = product["quantity"]
+def unit(id, page, list):
     product_info_container = page.find_all("div", id="productInfoContainer")
     disponibility = product_info_container[0].find_all(
         "div", class_="product_not_available"
     )
 
     if disponibility:
-        result.update({id: 0})
-        print(f"SCRAPPING_SERVICE - cotto.py - unit: {id} not available, {result[id]}")
+        list.update({id: 0})
+        print(f"SCRAPPING_SERVICE - cotto.py - unit: {id} not available, {list[id]}")
         return None
 
     try:
@@ -77,20 +73,20 @@ def unit(product, page, result):
             .get_text()
         )
     except IndexError:
-        result.update({id: 0})
+        list.update({id: 0})
         index_error.append(id)
-        print(f"SCRAPPING_SERVICE - cotto.py - unit: {id} IndexError, {result[id]}")
+        print(f"SCRAPPING_SERVICE - cotto.py - unit: {id} IndexError, {list[id]}")
         return None
 
     match = re.search(r"\$([\d,.]+)", value)
 
     if match:
         number = float(match.group(1).replace(".", "").replace(",", "."))
-        result.update({id: number / quantity})
+        list.update({id: number})
 
     else:
-        result.update({id: 0})
-        print(f"SCRAPPING_SERVICE - cotto.py - unit: {id} not found, {result[id]}")
+        list.update({id: 0})
+        print(f"SCRAPPING_SERVICE - cotto.py - unit: {id} not found, {list[id]}")
 
 def scrap_cotto():
     result = {
@@ -127,7 +123,7 @@ def scrap_cotto():
                 driver.get(product["url"])
                 driver.implicitly_wait(10)
                 page = BeautifulSoup(driver.page_source, "html.parser")
-                kg(product, page, result)
+                kilo(str(product["product_id"]), page, result)
             else:
                 print(f"ERROR - SCRAPPING_SERVICE - cotto.py - scrap_cotto: {product['name']} no url")
         elif product["measurement"] == "unit":
@@ -135,7 +131,7 @@ def scrap_cotto():
                 driver.get(product["url"])
                 driver.implicitly_wait(10)
                 page = BeautifulSoup(driver.page_source, "html.parser")
-                unit(product, page, result)
+                unit(str(product["product_id"]), page, result)
             else:
                 print(f"ERROR - SCRAPPING_SERVICE - cotto.py - scrap_cotto: {product['name']} no url")
         if "nan" in result.values():

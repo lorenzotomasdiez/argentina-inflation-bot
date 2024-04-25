@@ -6,13 +6,12 @@ import os
 load_dotenv()
 
 root_dir = os.path.dirname(os.path.realpath(__file__))
-basic_basket_list_dir = os.path.join(root_dir, "base", "basic_basket_list.csv")
-basic_basket_list_carrefour_dir = os.path.join(root_dir, "base", "basic_basket_list_carrefour.csv")
+base_dir = os.path.join(root_dir, "base")
 prices_dir = os.path.join(root_dir, "base", "prices.csv")
 prices_long_list_dir = os.path.join(root_dir, "base", "prices_long_list.csv")
 
 basket_csv = pd.read_csv(
-  basic_basket_list_dir,
+  os.path.join(base_dir, "old", "basic_basket_list.csv"),
   sep=";",
   encoding="utf-8",
   usecols=["producto", "cantidad_g_ml", "url_coto", "tipo_producto", "porcion"],

@@ -6,8 +6,8 @@ def get_all_products_markets(market_id):
 
     cursor.execute(
         """
-        SELECT pm.id, pm.market_id, pm.product_id, pm.quantity, pm.url,
-               p.name, p.format_name, p.product_type, p.portion
+        SELECT pm.id, pm.market_id, pm.product_id, pm.url, pm.measurement, pm.quantity,
+               p.name, p.format_name
         FROM products_markets pm
         INNER JOIN products p ON pm.product_id = p.id
         WHERE pm.market_id = %s
@@ -24,12 +24,11 @@ def get_all_products_markets(market_id):
             "id": product_market[0],
             "market_id": product_market[1],
             "product_id": product_market[2],
-            "quantity": product_market[3],
-            "url": product_market[4],
-            "name": product_market[5],
-            "format_name": product_market[6],
-            "product_type": product_market[7],
-            "portion": product_market[8]
+            "url": product_market[3],
+            "measurement": product_market[4],
+            "quantity": product_market[5],
+            "name": product_market[6],
+            "format_name": product_market[7]
         }
         products_markets_json.append(product_market_json)
 

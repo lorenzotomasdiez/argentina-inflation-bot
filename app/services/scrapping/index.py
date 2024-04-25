@@ -1,5 +1,5 @@
 from .cotto import scrap_cotto
-from .carrefour import scrap_carrefour
+from .dia import scrap_dia
 from config import basket_csv
 from services.db.prices.index import add_prices
 
@@ -18,5 +18,6 @@ def scrap():
         "message": "Scrap succefully done"
     }
 
-def single_scrap_carrefour():
-    return scrap_carrefour()
+def single_scrap_dia():
+    print(scrap_dia())
+    return "done"

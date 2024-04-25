@@ -2,7 +2,8 @@ import psycopg2
 import numpy as np
 import json
 import pandas as pd
-from config import POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER, basic_basket_list_dir, basic_basket_list_carrefour_dir
+import os
+from config import POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER, base_dir
 
 def seed_products_markets_carrefour(products_seeded):
     try:
@@ -21,10 +22,7 @@ def seed_products_markets_carrefour(products_seeded):
             id,
             product_id, id of the product
             market_id, id of the market
-            quantity, quantity in gr or ml
             url, url of the product in the market
-            type, type of the product unit or kilo
-            portion, portion of the product can be null
         """
         cursor.execute(
             """
@@ -32,33 +30,26 @@ def seed_products_markets_carrefour(products_seeded):
                 id SERIAL PRIMARY KEY,
                 product_id INTEGER REFERENCES products(id),
                 market_id INTEGER REFERENCES markets(id),
-                quantity FLOAT NOT NULL,
-                url VARCHAR(255) NOT NULL
+                url VARCHAR(255) NOT NULL,
+                measurement VARCHAR(255) NOT NULL DEFAULT 'kg'
             )
             """
         )
 
-        carrefour_df = pd.read_csv(basic_basket_list_carrefour_dir, sep=";", encoding="utf-8")
-
-        carrefour_df["cantidad_g_ml"] = carrefour_df["cantidad_g_ml"].str.replace(",", ".")
-
-        carrefour_df["cantidad_g_ml"] = carrefour_df["cantidad_g_ml"].str.replace("-", "")
-
-        carrefour_df["cantidad_g_ml"].replace('', np.nan, inplace=True)
-
-        carrefour_df["cantidad_g_ml"] = carrefour_df["cantidad_g_ml"].astype(float)
+        carrefour_dir =  os.path.join(base_dir, "03-list.csv")
+        carrefour_df = pd.read_csv(carrefour_dir, sep=";", encoding="utf-8")
 
         for row in carrefour_df.itertuples():
             # find in products_seeded object the one with the name equal to df.producto
-            product = next((product for product in products_seeded if product["name"] == row.producto), None)
+            product = next((product for product in products_seeded if product["format_name"] == row.product), None)
             if product is None:
                 continue
             cursor.execute(
                 """
-                INSERT INTO products_markets (product_id, market_id, quantity, url)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO products_markets (product_id, market_id, url)
+                VALUES (%s, %s, %s)
                 """,
-                (product["id"], 3, row.cantidad_g_ml, row.url)
+                (product["id"], 3, row.url)
             )
 
         connection.commit()
@@ -78,8 +69,7 @@ def seed_products_markets_carrefour(products_seeded):
                 "id": product_market[0],
                 "product_id": product_market[1],
                 "market_id": product_market[2],
-                "quantity": product_market[3],
-                "url": product_market[4],
+                "url": product_market[3],
             }
             products_markets_json.append(product_market_json)
 
