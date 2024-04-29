@@ -7,15 +7,15 @@ harina_de_maiz;https://diaonline.supermercadosdia.com.ar/polenta-coccion-rapida-
 arroz;https://diaonline.supermercadosdia.com.ar/arroz-largo-fino-ala-1kg-25417/p;kg;1
 fideos_secos;https://diaonline.supermercadosdia.com.ar/fideos-spaguetti-la-providencia-500-gr-147293/p;kg;1
 asado;https://diaonline.supermercadosdia.com.ar/asado-envasado-al-vacio-x-1-kg-217078/p;kg;1
-carnaza_comun; - ;kg;1
-hueso_con_carne; - ;kg;1
+carnaza_comun;nan;kg;1
+hueso_con_carne;nan;kg;1
 paleta;https://diaonline.supermercadosdia.com.ar/paleta-de-churrasco-x-kg-724165/p;kg;1
 carne_picada;https://diaonline.supermercadosdia.com.ar/carne-picada-comun-atmosfera-modificada-600-gr-225677/p;kg;0.6
 nalga;https://diaonline.supermercadosdia.com.ar/tapa-de-nalga-carnes-de-la-estancia-envasado-al-vacio-x-1-kg-150250/p;kg;1
-higado; - ;kg;1
+higado;nan;kg;1
 pechito_de_cerdo;https://diaonline.supermercadosdia.com.ar/pechito-de-cerdo-al-vacio-x-kg-123969/p;kg;1
 pollo;https://diaonline.supermercadosdia.com.ar/pollo-fresco-x-1-kg-90150/p;kg;1
-carne_de_pescado;-;kg;1
+carne_de_pescado;nan;kg;1
 mortadela;https://diaonline.supermercadosdia.com.ar/mortadela-feteada-lario-150-gr-270904/p;kg;0.15
 paleta_cocida;https://diaonline.supermercadosdia.com.ar/paleta-cocida-paladini-feteado-fino-200-gr-273197/p;kg;0.2
 salchich¢n;https://diaonline.supermercadosdia.com.ar/salchichon-primavera-lario-300-gr-75214/p;kg;0.3
@@ -63,3 +63,5 @@ vino;https://diaonline.supermercadosdia.com.ar/vino-tinto-toro-tetra-brick-1-lt-
 cafe;https://diaonline.supermercadosdia.com.ar/cafe-suave-mas-aroma-arlistan-100-gr-7481/p;kg;0.1
 yerba;https://diaonline.supermercadosdia.com.ar/yerba-mate-playadito-suave-1-kg-269577/p;kg;1
 te_en_saquitos;https://diaonline.supermercadosdia.com.ar/te-en-saquitos-green-hills-50-ud-18963/p;unit;50
+coca_cola;https://diaonline.supermercadosdia.com.ar/gaseosa-coca-cola-sabor-original-225-lt-14837/p;l;2.25
+fernet;https://diaonline.supermercadosdia.com.ar/aperitivo-fernet-branca-750-ml-40267/p;l;0.75

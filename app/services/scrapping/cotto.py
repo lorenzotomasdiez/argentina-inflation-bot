@@ -1,5 +1,4 @@
 import re
-import datetime as dt
 from bs4 import BeautifulSoup
 from services.db.prices.index import get_prices
 from services.db.products_markets.index import get_all_products_markets
@@ -8,7 +7,7 @@ from selenium.webdriver.common.by import By # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait # type: ignore
 from selenium.webdriver.support import expected_conditions as EC # type: ignore
 from selenium.common.exceptions import TimeoutException # type: ignore
-from config import SELENIUM_HOST, SELENIUM_PORT
+from config import SELENIUM_HOST, SELENIUM_PORT, get_date_now
 
 
 index_error = []
@@ -94,7 +93,7 @@ def unit(product, page, result):
 
 def scrap_cotto():
     result = {
-        "date": dt.datetime.now().strftime("%Y-%m-%d")
+        "date": get_date_now()
     }
     date = result["date"]
 

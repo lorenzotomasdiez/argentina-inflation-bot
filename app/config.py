@@ -1,3 +1,5 @@
+import datetime as dt
+from datetime import timezone
 import psycopg2
 import pandas as pd
 from dotenv import load_dotenv
@@ -74,3 +76,20 @@ def get_month_from_date(date):
     }
     month = date.split("-")[1]
     return months.get(month)
+
+
+def get_date_now():
+    """Get the current date in GMT-3 timezone format."""
+    # Get the current time in UTC
+    current_utc_time = dt.datetime.now(timezone.utc)
+
+    # Calculate the offset for GMT-3 timezone (3 hours west of UTC)
+    gmt_minus_three_offset = dt.timedelta(hours=-3)
+
+    # Apply the offset to get the current time in GMT-3 timezone
+    current_gmt_minus_three_time = current_utc_time + gmt_minus_three_offset
+
+    # Format the current date in the desired format ("%Y-%m-%d")
+    current_date_in_gmt_minus_three_format = current_gmt_minus_three_time.strftime("%Y-%m-%d")
+
+    return current_date_in_gmt_minus_three_format

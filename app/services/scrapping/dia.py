@@ -1,5 +1,3 @@
-import re
-import datetime as dt
 from config import SELENIUM_HOST, SELENIUM_PORT
 from services.db.products_markets.index import get_all_products_markets
 from services.db.prices.index import get_prices
@@ -8,41 +6,63 @@ from selenium.webdriver.common.by import By # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait # type: ignore
 from selenium.webdriver.support import expected_conditions as EC # type: ignore
 from selenium.common.exceptions import TimeoutException # type: ignore
-from config import SELENIUM_HOST, SELENIUM_PORT
+from config import SELENIUM_HOST, SELENIUM_PORT, get_date_now
 from bs4 import BeautifulSoup
 
-def get_price_by_kg_dia(driver, prod_url, status):
+def get_price_by_kg_dia(product, result, driver, prod_url, status):
+    product_name = product["name"]
+    product_id = str(product["product_id"])
+    product_quantity = product["quantity"]
     if status() == True:
         driver.get(prod_url)
         driver.implicitly_wait(10)
         page = BeautifulSoup(driver.page_source, "html.parser")
         container = page.find_all("div", class_="vtex-flex-layout-0-x-flexRowContent--product-unit")
-        price_str = container[0].find_all("span", class_="vtex-product-specifications-1-x-specificationValue")[0].get_text()
-        return price_str
+        try:
+            price_str = container[0].find_all("span", class_="vtex-product-specifications-1-x-specificationValue")[0].get_text()
+        except IndexError:
+            result.update({product_id: 0})
+            print(f"SCRAPPING_SERVICE - dia.py - get_price_by_kg_dia: IndexError - {product_name} - {result[product_id]}")
+            return None
+        
+        try:
+            number = float(price_str)
+            result.update({product_id: number * product_quantity})
+        except Exception as e:
+            result.update({product_id: 0})
+            print(f"SCRAPPING_SERVICE - dia.py - get_price_by_kg_dia: match is None - {product_name} - {result[product_id]} - {price_str}")
+    else:
+        print(f"SCRAPPING_SERVICE - dia.py - get_price_by_kg_dia: status is None - {product_name} - no url")
 
-def get_price_by_unit_dia(driver, prod_url, status):
+def get_price_by_unit_dia(product, result, driver, prod_url, status):
+    product_name = product["name"]
+    product_id = str(product["product_id"])
+    product_quantity = product["quantity"]
     if status() == True:
         driver.get(prod_url)
         driver.implicitly_wait(10)
         page = BeautifulSoup(driver.page_source, "html.parser")
         container = page.find_all("div", class_="vtex-flex-layout-0-x-flexRowContent--product-unit")
-        price_str = container[0].find_all("span", class_="vtex-product-specifications-1-x-specificationValue")[0].get_text()
-        return price_str
+        
+        try:
+            price_str = container[0].find_all("span", class_="vtex-product-specifications-1-x-specificationValue")[0].get_text()
+        except IndexError:
+            result.update({product_id: 0})
+            print(f"SCRAPPING_SERVICE - dia.py - get_price_by_unit_dia: IndexError - {product_name} - {result[product_id]}")
+            return None
 
-
-def get_price_by_l_dia(driver, prod_url, status):
-    if status() == True:
-        driver.get(prod_url)
-        driver.implicitly_wait(10)
-        page = BeautifulSoup(driver.page_source, "html.parser")
-        container = page.find_all("div", class_="vtex-flex-layout-0-x-flexRowContent--product-unit")
-        price_str = container[0].find_all("span", class_="vtex-product-specifications-1-x-specificationValue")[0].get_text()
-        return price_str
-
+        try:
+            number = float(price_str)
+            result.update({product_id: number / product_quantity})
+        except Exception as e:
+            result.update({product_id: 0})
+            print(f"SCRAPPING_SERVICE - dia.py - get_price_by_unit_dia: cannot float - {product_name} - {result[product_id]} - {price_str}")
+    else:
+        print(f"SCRAPPING_SERVICE - dia.py - get_price_by_unit_dia: status is None - {product_name} - no url")
 
 def scrap_dia():
     result = {
-        "date": dt.datetime.now().strftime("%Y-%m-%d")
+        "date": get_date_now()
     }
 
     date = result.get("date")
@@ -77,20 +97,11 @@ def scrap_dia():
             print(f"ERROR - SCRAPPING_SERVICE - dia.py - scrap_dia: {id} - no url")
             continue
         try:
-            if product["measurement"] == "kg":
-                price = get_price_by_kg_dia(driver, prod_url, status)
-                if price is not None:
-                    result[str(id)] = price
+            if product["measurement"] == "kg" or product["measurement"] == "l":
+                get_price_by_kg_dia(product, result, driver, prod_url, status)
             elif product["measurement"] == "unit":
-                price = get_price_by_unit_dia(driver, prod_url, status)
-                if price is not None:
-                    result[str(id)] = price
-            elif product["measurement"] == "l":
-                price = get_price_by_l_dia(driver, prod_url, status)
-                if price is not None:
-                    result[str(id)] = price
+                get_price_by_unit_dia(product, result, driver, prod_url, status)
         except Exception as e:
             print(f"ERROR - SCRAPPING_SERVICE - dia.py - scrap_dia: {e} - {id}")
-
 
     return result

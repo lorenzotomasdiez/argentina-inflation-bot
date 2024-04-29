@@ -108,3 +108,35 @@ def get_prices_by_product_dates(product_id, market_id, from_date, to_date):
     finally:
         cursor.close()
         connection.close()
+
+def get_all_prices_by_date(date):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute(
+            """
+            SELECT * FROM prices WHERE date = %s
+            """,
+            (date,)
+        )
+
+        results = cursor.fetchall()
+
+        results_json = []
+        for result in results:
+            results_json.append({
+                "id": result[0],
+                "product_id": result[1],
+                "market_id": result[2],
+                "price": result[3],
+                "date": result[4]
+            })
+
+        return results_json
+    except Exception as e:
+        error_message = f"Error in DB-PRICES SERVICE: {e}"
+        print(error_message)
+        return {"error": error_message}
+    finally:
+        cursor.close()
+        connection.close()
