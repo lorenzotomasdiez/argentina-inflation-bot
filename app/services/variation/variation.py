@@ -3,14 +3,15 @@ from services.db.products.index import get_all_products
 import pandas as pd # type: ignore
 from services.db.prices.index import get_prices_by_product_dates
 from services.db.products_markets.index import get_all_products_markets
+from config import get_date_now
 
-def calculate_variation(today=None):
+def calculate_variation(market_id, today=None):
     if today is None:
-        today = dt.datetime.now().strftime('%Y-%m-%d')
+        today = get_date_now()
 
     first_day_month = dt.datetime.strptime(today, '%Y-%m-%d').replace(day=1).strftime('%Y-%m-%d')
 
-    products = get_all_products_markets(1)
+    products = get_all_products_markets(market_id)
 
     product_variations = []
 
@@ -39,16 +40,12 @@ def calculate_variation(today=None):
 
     if df.empty:
         raise Exception("Empty DataFrame")
-        return {
-            "products": [],
-            "price_variation": None
-        }
 
     df_last_prices = df[['last']]['last']
 
     df_first_prices = df[['first']]['first']
 
-    price_variation = round((df_last_prices / df_first_prices - 1) * 100, 2)
+    price_variation = round(((df_last_prices - df_first_prices) / df_first_prices) * 100, 2)
 
     average_variation = price_variation.mean()
 
@@ -60,9 +57,9 @@ def calculate_variation(today=None):
     }
 
 
-def calculate_products_more_variation(today=None):
+def calculate_products_more_variation(market_id, today=None):
     complete_products = get_all_products()
-    variation = calculate_variation(today)
+    variation = calculate_variation(market_id, today)
 
     products = variation.get("products")
     from_var = variation.get("from")

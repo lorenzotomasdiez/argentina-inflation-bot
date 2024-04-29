@@ -1,7 +1,8 @@
 import psycopg2
+import os
 import json
 import pandas as pd
-from config import POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER, basic_basket_list_dir
+from config import POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER, base_dir
 
 def seed_products():
     connection = psycopg2.connect(
@@ -20,26 +21,22 @@ def seed_products():
         CREATE TABLE IF NOT EXISTS products (
             id SERIAL PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
-            format_name VARCHAR(255),
-            product_type VARCHAR(50),
-            portion VARCHAR(50)
+            format_name VARCHAR(255) NOT NULL UNIQUE
         )
         """
     )
 
-    df = pd.read_csv(basic_basket_list_dir, sep=";", encoding="utf-8")
+    products_dir = os.path.join(base_dir, "list.csv")
+
+    df = pd.read_csv(products_dir, sep=";", encoding="utf-8")
 
     for row in df.itertuples():
-        portion_value = row.porcion
-        if pd.isna(row.porcion):
-            portion_value = None  # Usar None para NULL en la base de datos
-
         cursor.execute(
             """
-            INSERT INTO products (name, format_name, product_type, portion)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO products (name, format_name)
+            VALUES (%s, %s)
             """,
-            (row.producto, row.producto.strip().replace(' ', '_').lower(),row.tipo_producto, portion_value)
+            (row.name, row.product)
         )
 
     connection.commit()
@@ -56,8 +53,6 @@ def seed_products():
             "id": product[0],
             "name": product[1],
             "format_name": product[2],
-            "product_type": product[3],
-            "portion": product[4]
         }
         products_json.append(product_dict)
 

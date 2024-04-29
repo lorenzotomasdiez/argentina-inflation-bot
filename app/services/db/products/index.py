@@ -20,8 +20,6 @@ def get_all_products():
             "id": product[0],
             "name": product[1],
             "format_name": product[2],
-            "product_type": product[3],
-            "portion": product[4],
         }
         products_json.append(product_json)
 

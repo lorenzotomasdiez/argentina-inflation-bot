@@ -1,4 +1,15 @@
-# Current v0.1.0
+# Current v0.2.0
+
+# Release Notes - v0.2.0
+
+## New Features
+
+### ADD CARREFOUR LIST
+
+- Added list of products from Carrefour to the project in csv format
+- Create seeder of products_markets for the Carrefour list
+
+### ADD CARREFOUR SCRAP SERVICE
 
 # Release Notes - v0.1.0
 
@@ -14,6 +25,8 @@
 - Backup csv-xlsx: Implemented a backup service to store data locally by creating a new date copy of prices.csv, prices_long_list.csv, prices.xlsx
 
 - Telegram service: Implemented a Telegram service to send messages to a specific chat_id.
+
+  - Implemented general messages of the calculated variation. General variation, products with more variation and products with more reduction.
 
 - Variation calculation service: Implemented a service to calculate the variation between the last two prices of a specific product.
 
