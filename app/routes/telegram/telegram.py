@@ -13,6 +13,6 @@ def send():
     message = request.json.get('message')
     return send_message(message)
 
-@telegram_bp.route('/variation', methods=['POST'])
-def variation():
-   return send_general_variation()
+@telegram_bp.route('/variation/<int:market_id>', methods=['POST'])
+def variation(market_id):
+    return send_general_variation(market_id)
