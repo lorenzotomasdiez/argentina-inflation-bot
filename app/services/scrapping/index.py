@@ -4,9 +4,6 @@ from .dia import scrap_dia
 from services.db.prices.index import add_prices
 import time
 
-def scrapping_test():
-    return "scrapping test"
-
 def scrap():
     has_error = False
     coto_results = scrap_cotto()
@@ -32,6 +29,16 @@ def scrap():
         "message": has_error if "error" else "Prices added successfully"
     }
 
-def single_scrap_dia():
-    dia_results = scrap_dia()
-    return json.dumps(dia_results)
+
+def single_scrap_cotto():
+    coto_results = scrap_cotto()
+    if "error" in coto_results:
+        return {
+            "sucess": False,
+            "message": coto_results
+        }
+    else:
+        return {
+            "sucess": True,
+            "message": "Prices added successfully"
+        }
