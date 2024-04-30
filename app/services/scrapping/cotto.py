@@ -1,5 +1,5 @@
 import re
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # type: ignore
 from services.db.prices.index import get_prices
 from services.db.products_markets.index import get_all_products_markets
 from selenium import webdriver # type: ignore

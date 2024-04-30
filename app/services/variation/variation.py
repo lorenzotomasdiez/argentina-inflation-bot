@@ -56,7 +56,6 @@ def calculate_variation(market_id, today=None):
     }
 
 
-
 def calculate_products_more_variation(market_id, today=None):
     complete_products = get_all_products()
     variation = calculate_variation(market_id, today)
