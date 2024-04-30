@@ -1,17 +1,14 @@
 from flask import Blueprint
-from services.scrapping.index import scrapping_test, scrap, single_scrap_dia
+from services.scrapping.index import scrap, single_scrap_cotto
 
 scrapping_bp = Blueprint('scrapping', __name__)
-
-@scrapping_bp.route('/test', methods=['GET'])
-def test():
-    return scrapping_test()
 
 @scrapping_bp.route('/', methods=['POST'])
 def index():
     return scrap()
 
+# Endpoint for scrapping prices of cotto
+@scrapping_bp.route('/cotto', methods=['GET'])
+def cotto():
+    return single_scrap_cotto()
 
-@scrapping_bp.route('/dia', methods=['POST'])
-def carrefour():
-    return single_scrap_dia()

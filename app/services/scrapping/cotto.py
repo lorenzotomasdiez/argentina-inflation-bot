@@ -1,5 +1,5 @@
 import re
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # type: ignore
 from services.db.prices.index import get_prices
 from services.db.products_markets.index import get_all_products_markets
 from selenium import webdriver # type: ignore
@@ -28,27 +28,42 @@ def kg(product, page, result):
 
     if disponibility:
         result.update({id: 0})
-        #SHOULD SAVE ERROR ON DB
-        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} not available, {result[id]}")
+        # GUARDAR ERROR EN DB
+        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} no disponible, {result[id]}")
         return None
 
     try:
-        # search inside product_info_container the span with the class unit
-        value = product_info_container[0].find_all("span", class_="unit")[0].get_text()
+        value_span = product_info_container[0].find("span", class_="unit")
+        default_value_span = product_info_container[0].find("span", class_="atg_store_newPrice")
+        # Asignación de value considerando la existencia de value_span y la longitud del texto dentro del span
+        value_text = value_span.get_text() if value_span else None
+        value = value_text if value_text and len(value_text.strip()) > 0 else None
+
+        # Asignación de default_value considerando la existencia de default_value_span y la longitud del texto dentro del span
+        default_value_text = default_value_span.get_text() if default_value_span else None
+        default_value = default_value_text if default_value_text and len(default_value_text.strip()) > 0 else None
+
+        # Si el valor principal está presente, busca el precio en él
+        if value:
+            match = re.search(r"\$([\d,.]+)", value)
+            if match:
+                number = float(match.group(1).replace(".", "").replace(",", "."))
+                result.update({id: number * quantity})
+            else:
+                result.update({id: 0})
+                print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} no encontrado, {result[id]}")
+        # Si el valor principal no está presente pero hay un valor de respaldo, busca el precio en él
+        elif default_value:
+            match = re.search(r"\$([\d,.]+)", default_value)
+            if match:
+                number = float(match.group(1).replace(".", "").replace(",", "."))
+                result.update({id: number * quantity})  # Guarda el precio de respaldo con una clave diferente
+            else:
+                result.update({id: 0})
+                print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} no encontrado en valor de respaldo, {result[id + '_backup']}")
     except IndexError:
         result.update({id: 0})
-        index_error.append(id)
         print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} IndexError, {result[id]}")
-        return None
-
-    match = re.search(r"\$([\d,.]+)", value)
-
-    if match:
-        number = float(match.group(1).replace(".", "").replace(",", "."))
-        result.update({id: number * quantity})
-    else:
-        result.update({id: 0})
-        print(f"SCRAPPING_SERVICE - cotto.py - kilo: {id} not found, {result[id]}")
 
 """
 - Take a product name and a URL, and return the price of the product.
@@ -141,4 +156,5 @@ def scrap_cotto():
             print(f"ERROR - SCRAPPING_SERVICE - cotto.py - scrap_cotto: nan in list")
         print(f"SCRAPPING_SERVICE - cotto.py - scrap_cotto: done")
 
+    print(result)
     return result
