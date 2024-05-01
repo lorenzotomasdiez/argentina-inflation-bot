@@ -4,6 +4,22 @@
 
 ## New Features
 
+### PLOT Creation
+- [NEW] Added a plot for the 20 products with the most variation in the last 30 days
+
+### DB Backup
+- [NEW] Instead csv backup, now the project has a .gz backup of the database
+
+### FIX COTTO SERVICE
+- [FIX] Fixed the Cotto service: it takes unit price when no kg price is available
+
+### ADD SCRAP DIA SERVICE
+- [NEW] Added scrap service for Dia Market
+
+### ADD TWITTER SERVICE
+- [NEW] Added tweet option for both bots
+- [NEW] Added media upload option for both bots
+
 ### ADD CARREFOUR LIST
 
 - Added list of products from Carrefour to the project in csv format
