@@ -16,9 +16,3 @@ def variable(id, from_var, to_var):
 @bcra_bp.route('/today', methods = ['GET'])
 def today():
   return bcra.general_variables_today()
-
-@bcra_bp.route('/tweet/today', methods = ['GET'])
-def tweet_today():
-  bcra.tweet_today()
-  return "Tweets sent!"
-  

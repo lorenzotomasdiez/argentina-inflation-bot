@@ -4,6 +4,6 @@ WORKDIR /app
 
 RUN pip install --upgrade pip
 
-RUN pip install psycopg2 bs4 selenium openpyxl pandas requests python-dotenv flask matplotlib celery tweepy
+RUN pip install psycopg2 bs4 selenium openpyxl pandas requests python-dotenv flask matplotlib celery tweepy redis flower==1.2.0
 
 CMD ["python", "main.py"]

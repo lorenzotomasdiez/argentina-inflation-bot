@@ -4,17 +4,13 @@ from config import get_month_from_date
 def generate_variation_bar_chart(products, to_var, market_name, top_n=10):
   to_day = to_var.split("-")[2]
   to_month = get_month_from_date(to_var)
-
-  # Filtrar productos con variación no nula
+  
   filtered_products = [product for product in products if product.get("variation") is not None]
 
-  # Ordenar los productos por variación de mayor a menor
   sorted_products = sorted(filtered_products, key=lambda x: x.get("variation"), reverse=True)
 
-  # Obtener los top_n productos con las mayores variaciones (positivas y negativas)
   top_products = sorted_products[:top_n] + sorted_products[-top_n:]
 
-  # Extraer nombres y variaciones de los productos seleccionados
   product_names = [product.get("name") for product in top_products]
   variations = [product.get("variation") for product in top_products]
 

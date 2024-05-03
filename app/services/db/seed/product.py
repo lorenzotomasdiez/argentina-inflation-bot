@@ -1,6 +1,5 @@
 import psycopg2
 import os
-import json
 import pandas as pd
 from config import POSTGRES_DB, POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_USER, base_dir
 
